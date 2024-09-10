@@ -1,4 +1,5 @@
-import tkinter as tk
+import tkinter as tk 
+from tkinter import ttk
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
@@ -104,6 +105,20 @@ def calcular_risco():
 # Interface Gráfica com Tkinter
 root = tk.Tk()
 root.title("Sistema de Análise de Risco Bancário")
+root.geometry("800x500")
+
+# Estilo da interface
+style = ttk.Style()
+style.configure("TLabel", font=("Helvetica", 12))
+style.configure("TButton", font=("Helvetica", 12), padding=5)
+style.configure("TEntry", font=("Helvetica", 12))
+
+# Configuração de cores
+root.configure(bg='#ffffff')  # Fundo branco
+style.configure("TLabel", background='#ffffff', foreground='#000000')  # Letras pretas
+style.configure("TButton", background='#000000', foreground='#000000')  # Botão preto com letras pretas
+style.map("TButton", background=[('active', '#333333')])  # Botão ativo com fundo cinza escuro
+
 
 # Explicação inicial
 explicacao = """
@@ -119,27 +134,30 @@ Aqui estão as instruções para inserir os valores:
 Com base nesses dados, o sistema calculará o risco de crédito, variando de baixo a alto.
 """
 
-tk.Label(root, text=explicacao, justify="left").grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+ttk.Label(root, text=explicacao, justify="left").grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
-tk.Label(root, text="Histórico de Crédito (0 a 10):").grid(row=1)
-tk.Label(root, text="Renda Mensal (R$):").grid(row=2)
-tk.Label(root, text="Valor da Dívida (R$):").grid(row=3)
-tk.Label(root, text="Idade (18 a 80):").grid(row=4)
+ttk.Label(root, text="Histórico de Crédito (0 a 10):").grid(row=1, column=0, padx=10, pady=5, sticky="W")
+ttk.Label(root, text="Renda Mensal (R$):").grid(row=2, column=0, padx=10, pady=5, sticky="W")
+ttk.Label(root, text="Valor da Dívida (R$):").grid(row=3, column=0, padx=10, pady=5, sticky="W")
+ttk.Label(root, text="Idade:").grid(row=4, column=0, padx=10, pady=5, sticky="W")
 
-entry_hist = tk.Entry(root)
-entry_renda = tk.Entry(root)
-entry_divida = tk.Entry(root)
-entry_idade = tk.Entry(root)
+entry_hist = ttk.Entry(root)
+entry_hist.grid(row=1, column=1, padx=10, pady=5)
 
-entry_hist.grid(row=1, column=1)
-entry_renda.grid(row=2, column=1)
-entry_divida.grid(row=3, column=1)
-entry_idade.grid(row=4, column=1)
+entry_renda = ttk.Entry(root)
+entry_renda.grid(row=2, column=1, padx=10, pady=5)
 
+entry_divida = ttk.Entry(root)
+entry_divida.grid(row=3, column=1, padx=10, pady=5)
+
+entry_idade = ttk.Entry(root)
+entry_idade.grid(row=4, column=1, padx=10, pady=5)
+
+# Resultado do cálculo
 resultado = tk.StringVar()
-tk.Label(root, textvariable=resultado).grid(row=6, column=1)
+ttk.Label(root, textvariable=resultado, font=("Helvetica", 14, "bold")).grid(row=5, column=0, columnspan=2, padx=10, pady=20)
 
-btn_calcular_risco = tk.Button(root, text="Calcular Risco", command=calcular_risco)
-btn_calcular_risco.grid(row=5, column=1, pady=10)
+# Botão para calcular o risco
+ttk.Button(root, text="Calcular Risco", command=calcular_risco).grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
 root.mainloop()
