@@ -39,7 +39,7 @@ A lógica fuzzy é utilizada para lidar com incertezas e fornecer um cálculo de
 
 1. O usuário insere um **histórico de crédito** de 8, **renda mensal** de R$ 30.000, **dívida** de R$ 5.000 e **idade** de 35 anos.
 2. O sistema calcula a dívida como 16.67% da renda mensal.
-3. Com base nas regras fuzzy, o sistema gera um **risco de 35%**, classificado como **moderado**.
+3. Com base nas regras fuzzy, o sistema gera um **risco de 50%**, classificado como **moderado**.
 
 ## 🚀 Como Executar o Sistema
 

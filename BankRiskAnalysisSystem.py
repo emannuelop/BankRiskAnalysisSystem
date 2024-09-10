@@ -6,9 +6,9 @@ from skfuzzy import control as ctrl
 
 # Configuração das variáveis fuzzy
 historico_credito = ctrl.Antecedent(np.arange(0, 11, 1), 'historico_credito')
-renda_mensal = ctrl.Antecedent(np.arange(0, 50001, 1), 'renda_mensal')  # Renda até 50.000
-divida_atual = ctrl.Antecedent(np.arange(0, 501, 1), 'divida_atual')  # Dívida até 500% da renda
-idade = ctrl.Antecedent(np.arange(18, 81, 1), 'idade')  # Idade de 18 a 80 anos
+renda_mensal = ctrl.Antecedent(np.arange(0, 50001, 1), 'renda_mensal')  
+divida_atual = ctrl.Antecedent(np.arange(0, 501, 1), 'divida_atual')  
+idade = ctrl.Antecedent(np.arange(18, 81, 1), 'idade')  
 
 # Definindo a variável de saída
 risco = ctrl.Consequent(np.arange(0, 101, 1), 'risco')
@@ -39,18 +39,18 @@ risco['baixo'] = fuzz.trapmf(risco.universe, [0, 0, 20, 40])
 risco['moderado'] = fuzz.trimf(risco.universe, [30, 50, 70])
 risco['alto'] = fuzz.trapmf(risco.universe, [60, 80, 100, 100])
 
-# Regras Fuzzy
+# Regras Fuzzy (ajustadas para suavizar a transição entre baixo e moderado risco)
 rule1 = ctrl.Rule(historico_credito['excelente'] & divida_atual['baixa'], risco['baixo'])
 rule2 = ctrl.Rule(historico_credito['ruim'] & divida_atual['alta'], risco['alto'])
 rule3 = ctrl.Rule(historico_credito['bom'] & renda_mensal['media'] & divida_atual['moderada'], risco['moderado'])
 rule4 = ctrl.Rule(historico_credito['regular'] & divida_atual['moderada'], risco['moderado'])
-rule5 = ctrl.Rule(historico_credito['bom'] & renda_mensal['alta'], risco['baixo'])
+rule5 = ctrl.Rule(historico_credito['bom'] & renda_mensal['alta'] & divida_atual['baixa'], risco['moderado'])  
 rule6 = ctrl.Rule(historico_credito['ruim'] & renda_mensal['baixa'], risco['alto'])
-rule7 = ctrl.Rule(historico_credito['ruim'] | renda_mensal['baixa'], risco['alto'])  # Fallback
+rule7 = ctrl.Rule(historico_credito['ruim'] | renda_mensal['baixa'], risco['alto'])  
 rule8 = ctrl.Rule(historico_credito['excelente'] & renda_mensal['alta'] & divida_atual['baixa'], risco['baixo'])
 rule9 = ctrl.Rule(historico_credito['bom'] & divida_atual['alta'], risco['alto'])
-rule10 = ctrl.Rule(idade['jovem'] & renda_mensal['alta'] & divida_atual['baixa'], risco['baixo'])  # Jovem com alta renda e dívida baixa
-rule11 = ctrl.Rule(idade['idoso'] & divida_atual['alta'], risco['alto'])  # Idoso com alta dívida tem maior risco
+rule10 = ctrl.Rule(idade['jovem'] & renda_mensal['alta'] & divida_atual['baixa'], risco['baixo'])  
+rule11 = ctrl.Rule(idade['idoso'] & divida_atual['alta'], risco['alto'])  
 
 # Sistema de Controle Fuzzy
 risco_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11])
