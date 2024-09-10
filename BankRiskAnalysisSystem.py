@@ -65,13 +65,19 @@ def obter_descricao_risco(valor_risco):
     else:
         return 'Alto'
 
-# Função para calcular o risco
 def calcular_risco():
     try:
-        hist = float(entry_hist.get())
-        renda = float(entry_renda.get())
-        divida = float(entry_divida.get())
-        idade_valor = float(entry_idade.get())
+        # Obtenção dos valores inseridos e substituição de separadores de milhar
+        hist = entry_hist.get().replace(',', '.').replace('.', '')  
+        renda = entry_renda.get().replace(',', '.').replace('.', '')  
+        divida = entry_divida.get().replace(',', '.').replace('.', '')  
+        idade_valor = entry_idade.get().replace(',', '.').replace('.', '')  
+
+        # Conversão para float
+        hist = float(hist)
+        renda = float(renda)
+        divida = float(divida)
+        idade_valor = float(idade_valor)
 
         # Cálculo automático do percentual da dívida em relação à renda
         divida_percent = (divida / renda) * 100
@@ -110,6 +116,7 @@ def calcular_risco():
         resultado.set("Por favor, insira valores numéricos válidos.")
     except Exception as e:
         resultado.set(f"Ocorreu um erro inesperado: {str(e)}")
+
 
 # Interface Gráfica com Tkinter
 root = tk.Tk()
