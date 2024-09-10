@@ -51,7 +51,7 @@ A lógica fuzzy é utilizada para lidar com incertezas e fornecer um cálculo de
 ### Instalação
 
 1. Clone este repositório:
-   git clone https://github.com/emannuelop/BankRiskAnalysisSystem
+   git clone <https://github.com/emannuelop/BankRiskAnalysisSystem>
     cd sistema-risco-bancario
 
 2. Instale as dependências:
