@@ -1,4 +1,4 @@
-import tkinter as tk 
+import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import skfuzzy as fuzz
@@ -56,6 +56,15 @@ rule11 = ctrl.Rule(idade['idoso'] & divida_atual['alta'], risco['alto'])  # Idos
 risco_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11])
 risco_simulacao = ctrl.ControlSystemSimulation(risco_ctrl)
 
+# Função para obter a descrição textual com base no valor do risco
+def obter_descricao_risco(valor_risco):
+    if valor_risco <= 20:
+        return 'Baixo'
+    elif valor_risco <= 70:
+        return 'Moderado'
+    else:
+        return 'Alto'
+
 # Função para calcular o risco
 def calcular_risco():
     try:
@@ -88,12 +97,12 @@ def calcular_risco():
         risco_simulacao.input['divida_atual'] = divida_percent
         risco_simulacao.input['idade'] = idade_valor
 
-        # Adicionando debug para verificar o input
-        print(f"Valores inseridos - Histórico: {hist}, Renda: {renda}, Dívida (%): {divida_percent}, Idade: {idade_valor}")
-
         risco_simulacao.compute()
         
-        resultado.set(f"Risco: {risco_simulacao.output['risco']:.2f}%")
+        valor_risco = risco_simulacao.output['risco']
+        descricao_risco = obter_descricao_risco(valor_risco)
+        
+        resultado.set(f"Risco: {valor_risco:.2f}% ({descricao_risco})")
     
     except KeyError as e:
         resultado.set(f"Erro ao calcular o risco. Chave não encontrada: {e}")
@@ -118,7 +127,6 @@ root.configure(bg='#ffffff')  # Fundo branco
 style.configure("TLabel", background='#ffffff', foreground='#000000')  # Letras pretas
 style.configure("TButton", background='#000000', foreground='#000000')  # Botão preto com letras pretas
 style.map("TButton", background=[('active', '#333333')])  # Botão ativo com fundo cinza escuro
-
 
 # Explicação inicial
 explicacao = """
