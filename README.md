@@ -28,7 +28,7 @@ Usamos **lógica fuzzy** para lidar com incertezas e fornecer um cálculo de ris
    - Renda mensal (até R$ 50.000)
    - Dívida atual (R$)
    - Idade (18 a 80 anos)
-   
+
 2. O sistema processa os dados usando regras fuzzy, calculando automaticamente a dívida como porcentagem da renda mensal.
-   
+
 3. O resultado é exibido em porcentagem, junto com uma classificação de risco (baixo, moderado, alto).
