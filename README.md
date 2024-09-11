@@ -52,7 +52,7 @@ A lógica fuzzy é utilizada para lidar com incertezas e fornecer um cálculo de
 
 1. Clone este repositório:
    git clone <https://github.com/emannuelop/BankRiskAnalysisSystem>
-    cd sistema-risco-bancario
+    cd BankRiskAnalysisSystem
 
 2. Instale as dependências:
     pip install numpy scikit-fuzzy
